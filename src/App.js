@@ -88,9 +88,7 @@ export default function App() {
     return (
         <div>
             <Header/>
-            <div className="mt-36">
-                <Todolist todos={todos} />
-            </div>
+            <div className="mt-36"> <Todolist todos={todos} /> </div>
         </div>
 
     )
