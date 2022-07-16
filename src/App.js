@@ -1,4 +1,4 @@
-import Header from "./Components/Header";
+import NavBar from "./Components/Navigation Bar/Nav Bar";
 import Todolist from "./Components/Todolist";
 export default function App() {
 
@@ -87,7 +87,7 @@ export default function App() {
         ]
     return (
         <div>
-            <Header/>
+            <NavBar/>
             <div className="mt-36"> <Todolist todos={todos} /> </div>
         </div>
 
