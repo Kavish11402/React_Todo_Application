@@ -20,7 +20,7 @@ export default function App() {
 
     const [btnText,setBtnText] =useState(night)
     const [btnIcon,setBtnIcon] = useState("text-stone-700 transition ease-in-out mx-auto")
-    const [dayNight,setDayNight] = useState("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
+    const [dayNight,setDayNight] = useState("flex items-center z-50 rounded-tl-full rounded-bl-full fixed top-32 right-0 bg-slate-500  h-14 w-28")
     const [Theme,setTheme] =useState("absolute top-0 left-0 right-0 bg-white")
 
     const toggle = ()=>{
@@ -29,14 +29,14 @@ export default function App() {
             setTheme("absolute top-0 left-0 right-0 bg-white")
             setBtnText(night)
             setBtnIcon("text-stone-700 transition ease-in-out mx-auto")
-            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
+            setDayNight("flex items-center z-50 rounded-tl-full rounded-bl-full fixed top-32 right-0 bg-slate-500  h-14 w-28")
 
             setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
         }
         else {
             setTheme("absolute top-0 left-0 right-0 bg-gray-600")
-            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
-            setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
+            setDayNight("flex items-center z-50 rounded-tl-full rounded-bl-full fixed top-32 right-0 bg-gray-300  h-14 w-28")
+            setBtnIcon("text-orange-600 transition ease-in-out mx-auto")
             setBtnText(day)
             setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-2xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-white")
         }
