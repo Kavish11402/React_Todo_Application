@@ -1,5 +1,5 @@
 import Todo from "./Model/Todo";
-export default function Todolist({todos})
+export default function Todolist({todos ,todoTheme})
 {
     return(
         <div>
@@ -7,7 +7,7 @@ export default function Todolist({todos})
                 todos.map(
                     (todo)=>{
                         return(
-                            <Todo todo={todo}/>
+                            <Todo todo={todo} todoTheme={todoTheme}/>
                         );
                     }
                 )

@@ -1,4 +1,3 @@
-import DayNight from "./Day Night Mode/DayNight";
 
 export default function NavBar()
 {
@@ -25,7 +24,6 @@ export default function NavBar()
         </div>
         <div className="flex">
             <button className={"text-md bg-indigo-700 px-5 py-2 rounded-lg transition ease-in-out hover:bg-indigo-500"} >+&nbsp;&nbsp;Add New Task</button>
-            <DayNight/>
         </div>
       </nav>
     </div>
