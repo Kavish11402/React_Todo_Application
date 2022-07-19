@@ -1,6 +1,7 @@
 import NavBar from "./Components/Navigation Bar/Nav Bar";
-import Todolist from "./Components/Todolist";
+import Todolist from "./Components/TodoComponent/Todolist";
 import {useState} from "react";
+import AddNewTodo from "./Components/TodoComponent/AddNewTodo";
 export default function App() {
 
 
@@ -17,16 +18,22 @@ export default function App() {
 
     const [todoTheme,setTodoTheme] = useState("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
 
+    let [isOpen, setIsOpen] = useState(false)
+
+
+
 
     const [btnText,setBtnText] =useState(night)
     const [btnIcon,setBtnIcon] = useState("text-stone-700 transition ease-in-out mx-auto")
     const [dayNight,setDayNight] = useState("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
     const [Theme,setTheme] =useState("absolute top-0 left-0 right-0 bg-white")
+    const [addTodoTheme,setAddTodoTheme] =useState("w-1/2 rounded-xl bg-white")
 
     const toggle = ()=>{
         if(Theme==="absolute top-0 left-0 right-0 bg-gray-600")
         {
             setTheme("absolute top-0 left-0 right-0 bg-white")
+            setAddTodoTheme("w-1/2 rounded-xl bg-white")
             setBtnText(night)
             setBtnIcon("text-stone-700 transition ease-in-out mx-auto")
             setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
@@ -35,6 +42,7 @@ export default function App() {
         }
         else {
             setTheme("absolute top-0 left-0 right-0 bg-gray-600")
+            setAddTodoTheme("w-1/2 rounded-xl bg-gray-600 ")
             setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
             setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
             setBtnText(day)
@@ -129,14 +137,25 @@ export default function App() {
 
     return (
         <div className="relative">
+
             <div className={Theme}>
+
+
+                <NavBar setIsOpen={setIsOpen} />
+
                 <div className={dayNight}>
                     <button onClick={toggle} className={btnIcon} >
                         {btnText}
                     </button>
                 </div>
-                <NavBar/>
-                <div className="mt-36"> <Todolist todos={todos} todoTheme={todoTheme} /> </div>
+
+                <div className="mt-36 ">
+                    <Todolist todos={todos} todoTheme={todoTheme} />
+                    <AddNewTodo isOpen={isOpen} setIsOpen={setIsOpen} addTodoTheme={addTodoTheme}/>
+
+
+                </div>
+
             </div>
         </div>
     )

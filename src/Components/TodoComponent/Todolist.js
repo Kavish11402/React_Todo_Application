@@ -1,4 +1,4 @@
-import Todo from "./Model/Todo";
+import Todo from "../Model/Todo";
 export default function Todolist({todos ,todoTheme})
 {
     return(
