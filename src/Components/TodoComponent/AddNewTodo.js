@@ -38,13 +38,14 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 border-2
                                                                 border-gray-400
                                                                 focus:border-indigo-500
-                                                                focus:shadow-md" />
+                                                                focus:shadow-md" placeholder="Title of TODO" />
 
                           </div>
 
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Category</p>
-                              <input type={"text"} required className="transition
+
+                              <select required className="transition
                                                                 ease-in-out
                                                                 delay-100
                                                                 hover:-translate-y-1
@@ -56,7 +57,13 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 border-2
                                                                 border-gray-400
                                                                 focus:border-indigo-500
-                                                                focus:shadow-md" />
+                                                                focus:shadow-md" placeholder="Select Category of TODO">
+
+                                  <option>Work</option>
+                                  <option>Personal</option>
+                                  <option>Other</option>
+                              </select>
+
                           </div>
 
                           <div className={"my-5"}>
@@ -73,7 +80,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 border-2
                                                                 border-gray-400
                                                                 focus:border-indigo-500
-                                                                focus:shadow-md" />
+                                                                focus:shadow-md" placeholder="Description of TODO"/>
                           </div>
 
                           <div className={"my-5"}>
@@ -90,7 +97,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 border-2
                                                                 border-gray-400
                                                                 focus:border-indigo-500
-                                                                focus:shadow-md" />
+                                                                focus:shadow-md"/>
                           </div>
 
                       </div>
