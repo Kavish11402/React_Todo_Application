@@ -5,7 +5,7 @@ import Category from "../List Components/Category";
 import Done from "../List Components/Done";
 import Date from "../List Components/Date";
 
-export default function Todo({todo,todoTheme})
+export default function Todo({todo , todoTheme , deleteTodo , todos , setTodos})
 {
     return(
 
@@ -16,7 +16,7 @@ export default function Todo({todo,todoTheme})
             <div>
                 <Title todoTitle={todo.title}/>
                 <Description todoDesc={todo.description}/>
-                <DoneDelete/>
+                <DoneDelete todos={todos} todoId={todo.id} deleteTodo={deleteTodo} setTodos={setTodos}/>
             </div>
 
 
@@ -28,6 +28,9 @@ export default function Todo({todo,todoTheme})
 
 
         </div>
+
+
+
 
     )
 }

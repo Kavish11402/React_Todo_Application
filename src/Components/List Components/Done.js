@@ -4,11 +4,9 @@ export default function Done({todoStatus})
     if (todoStatus)
         status = "Task is Completed"
   return(
-      <div className="flex mb-5 text-lg">
-          <h2 className=" font-bold">Done:</h2>
-          <p className="ml-4">
-              {status}
-          </p>
+      <div className="flex mb-10  text-2xl">
+          <h2 className="mr-4 underline font-bold">Done:</h2>
+          <p> {status} </p>
       </div>
   );
 }

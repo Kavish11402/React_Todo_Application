@@ -1,58 +1,67 @@
 import NavBar from "./Components/Navigation Bar/Nav Bar";
 import Todolist from "./Components/TodoComponent/Todolist";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddNewTodo from "./Components/TodoComponent/AddNewTodo";
+
+function setOnLocal(todoList){  localStorage.setItem("todosList",JSON.stringify(todoList)) }
+
+function getFromLocal(setTodosList){ setTodosList(JSON.parse(localStorage.getItem("todosList"))) }
+
+function deleteTodo(todoId , todos ,setTodos){
+
+    if (window.confirm("Are you sure you want to delete ?"))
+    {
+        let newTodo = todos.filter((todo)=>{
+            return(
+                todo.id !== todoId
+            )
+        })
+
+        setTodos(newTodo)
+        setOnLocal(newTodo)
+    }
+
+
+}
+
 export default function App() {
 
 
 
-    const day = <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 shadow-blue-200" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-            clip-rule="evenodd" />
-    </svg>
+    const day =
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-10 w-10 shadow-blue-200"
+            viewBox="0 0 20 20" fill="currentColor">
 
-    const night = <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-    </svg>
+            <path
+                fill-rule="evenodd"
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                clip-rule="evenodd"
+            />
+        </svg>
 
-
-    const [todoTheme,setTodoTheme] = useState("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
-
-    let [isOpen, setIsOpen] = useState(false)
-
-
-
-
-    const [btnText,setBtnText] =useState(night)
-    const [btnIcon,setBtnIcon] = useState("text-stone-700 transition ease-in-out mx-auto")
-    const [dayNight,setDayNight] = useState("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
-    const [Theme,setTheme] =useState("absolute top-0 left-0 right-0 bg-white")
-    const [addTodoTheme,setAddTodoTheme] =useState("w-1/2 rounded-xl bg-white")
-
-    const toggle = ()=>{
-        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600")
-        {
-            setTheme("absolute top-0 left-0 right-0 bg-white")
-            setAddTodoTheme("w-1/2 rounded-xl bg-white")
-            setBtnText(night)
-            setBtnIcon("text-stone-700 transition ease-in-out mx-auto")
-            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
-
-            setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
-        }
-        else {
-            setTheme("absolute top-0 left-0 right-0 bg-gray-600")
-            setAddTodoTheme("w-1/2 rounded-xl bg-gray-600 ")
-            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
-            setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
-            setBtnText(day)
-            setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-2xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-white")
-        }
-    }
+    const night =
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-10 w-10"
+            viewBox="0 0 20 20"
+            fill="currentColor">
+            <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
+        </svg>
 
 
-    const todos=
-        [
+
+
+    const [todos , setTodos] = useState([])
+
+    useEffect(()=>{
+
+        getFromLocal(setTodos)
+
+        /*setOnLocal([
             {
                 "id": 1,
                 "title": "Reactive dedicated project",
@@ -133,7 +142,44 @@ export default function App() {
                 "done": false,
                 "date": "25/01/2022"
             }
-        ]
+        ])*/
+
+    },[])
+
+
+
+
+    const [todoTheme,setTodoTheme] = useState("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
+    const [isOpen, setIsOpen] = useState(false)
+    const [btnText,setBtnText] =useState(night)
+    const [btnIcon,setBtnIcon] = useState("text-stone-700 transition ease-in-out mx-auto")
+    const [dayNight,setDayNight] = useState("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
+    const [Theme,setTheme] =useState("absolute top-0 left-0 right-0 bg-white")
+    const [addTodoTheme,setAddTodoTheme] =useState("w-1/2 rounded-xl bg-white")
+
+    const toggle = ()=>{
+        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600")
+        {
+            setTheme("absolute top-0 left-0 right-0 bg-white")
+            setAddTodoTheme("w-1/2 rounded-xl bg-white")
+            setBtnText(night)
+            setBtnIcon("text-stone-700 transition ease-in-out mx-auto")
+            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
+
+            setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
+        }
+        else {
+            setTheme("absolute top-0 left-0 right-0 bg-gray-600")
+            setAddTodoTheme("w-1/2 rounded-xl bg-gray-600 ")
+            setDayNight("flex items-center z-50 rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
+            setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
+            setBtnText(day)
+            setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-2xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-white")
+        }
+    }
+
+
+
 
     return (
         <div className="relative">
@@ -150,7 +196,7 @@ export default function App() {
                 </div>
 
                 <div className="mt-36 ">
-                    <Todolist todos={todos} todoTheme={todoTheme} />
+                    <Todolist todos={todos} todoTheme={todoTheme} deleteTodo={deleteTodo} setTodos={setTodos} />
                     <AddNewTodo isOpen={isOpen} setIsOpen={setIsOpen} addTodoTheme={addTodoTheme}/>
 
 

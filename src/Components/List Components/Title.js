@@ -1,9 +1,11 @@
 export default function Title({todoTitle})
 {
   return(
-      <div className="flex mb-5 text-lg">
-        <h2 className=" font-bold">Title:</h2>
-          <p className="ml-4">{todoTitle}</p>
+      <div className="flex mb-8 font-bold  text-4xl">
+
+        <h2 className="mr-4 underline">Title:</h2>
+        <p className="">{todoTitle}</p>
+
       </div>
   );
 }

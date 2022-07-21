@@ -1,9 +1,9 @@
 export default function Description({todoDesc})
 {
   return(
-      <div className="flex mb-5 text-lg">
-          <h2 className=" font-bold">Description:</h2>
-          <p className="ml-4">{todoDesc}</p>
+      <div className="flex mb-10  text-2xl">
+          <h2 className="mr-4 underline font-bold">Description:</h2>
+          <p className="">{todoDesc}</p>
       </div>
   );
 }
