@@ -1,9 +1,8 @@
-
 export default function NavBar({setIsOpen})
 {
   return(
     <div>
-      <nav className={"fixed top-0 left-0 right-0 h-20 flex justify-between px-32 text-white mx-auto bg-gray-800 items-center"}>
+      <nav className={"fixed z-30 top-0 left-0 right-0 h-20 flex justify-between px-32 text-white mx-auto bg-gray-800 items-center"}>
         <div className={"flex"}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +18,7 @@ export default function NavBar({setIsOpen})
                 />
             </svg>
             <h1 className={"font-bold text-4xl text-orange-400 px-4 pr-20"} >ToDo-Tasks</h1>
-            <button className={"text-md bg-gray-600 rounded-lg px-3 mr-2 transition ease-in-out hover:bg-gray-500"}>Home</button>
+            <button className={"text-md bg-gray-600 rounded-lg px-3 mr-2 transition ease-in-out hover:bg-gray-500" } >Home</button>
             <button className={"text-md bg-gray-600 rounded-lg px-3 mx-2 transition ease-in-out hover:bg-gray-500"}>Contact Us</button>
         </div>
         <div className="flex">

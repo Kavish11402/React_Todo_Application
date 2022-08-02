@@ -1,11 +1,35 @@
 import { Dialog } from '@headlessui/react'
+import {useRef} from "react";
 
-export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
+export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
 {
+    const title = useRef(null)
+    const category = useRef(null)
+    const description = useRef(null)
+
+
+    function createNewTodo(e)
+    {
+        e.preventDefault()
+        const date = new Date()
+        let newTodo =
+            {
+                "id": null,
+                "title": String(title.current.value),
+                "description": String(description.current.value),
+                "category": String(category.current.value),
+                "done": false,
+                "date": String(date.getDate()+" / "+(date.getMonth()+1)+" / "+date.getFullYear())
+            };
+        addNewTodo(newTodo,todos,setIsOpen)
+    }
+
+    const options = ["Work" , "Personal" , "Study" , "Urgent" , "Other"]
+
 
 
   return (
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-40">
 
           <div className="fixed inset-0 bg-black/60 backdrop-blur-lg"/>
 
@@ -15,7 +39,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
               <div className={"w-1/2 rounded-xl bg-white"}>
 
 
-                  <form>
+                  <form onSubmit={(e)=>{ createNewTodo(e) }}>
 
                       {/*Header*/}
                       <header className={"bg-gray-400/50 rounded-t-xl text-center text-3xl font-bold py-2.5"} >Create New Todo</header>
@@ -24,14 +48,11 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                       {/*Body*/}
                       <div className={"py-5 px-8"}>
 
+
+
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Title</p>
-                              <input type={"text"} required className="transition
-                                                                ease-in-out
-                                                                delay-100
-                                                                hover:-translate-y-1
-                                                                hover:scale-105
-                                                                duration-300
+                              <input ref={title} type={"text"} required className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
@@ -45,12 +66,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Category</p>
 
-                              <select required className="transition
-                                                                ease-in-out
-                                                                delay-100
-                                                                hover:-translate-y-1
-                                                                hover:scale-105
-                                                                duration-300
+                              <select ref={category} required className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
@@ -59,21 +75,20 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 focus:border-indigo-500
                                                                 focus:shadow-md" placeholder="Select Category of TODO">
 
-                                  <option>Work</option>
-                                  <option>Personal</option>
-                                  <option>Other</option>
+                                  {options.map((option)=>{
+                                      return(
+                                          <option key={option} value={option}>
+                                              {option}
+                                          </option>
+                                      )
+                                  })}
                               </select>
 
                           </div>
 
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Description</p>
-                              <input type={"text"} required className="transition
-                                                                ease-in-out
-                                                                delay-100
-                                                                hover:-translate-y-1
-                                                                hover:scale-105
-                                                                duration-300
+                              <input ref={description} type={"text"} required className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
@@ -83,22 +98,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
                                                                 focus:shadow-md" placeholder="Description of TODO"/>
                           </div>
 
-                          <div className={"my-5"}>
-                              <p className={"mb-2 text-md font-bold"}>Date</p>
-                              <input type={"date"} required className="transition
-                                                                ease-in-out
-                                                                delay-100
-                                                                hover:-translate-y-1
-                                                                hover:scale-105
-                                                                duration-300
-                                                                w-full
-                                                                rounded-xl
-                                                                px-2
-                                                                border-2
-                                                                border-gray-400
-                                                                focus:border-indigo-500
-                                                                focus:shadow-md"/>
-                          </div>
+
 
                       </div>
 
@@ -108,7 +108,7 @@ export default function AddNewTodo({isOpen, setIsOpen, addTodoTheme})
 
                           <button className={"bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm text-sm font-medium mx-6 rounded-lg py-2 px-4"} onClick={()=>{setIsOpen(false)}}>Cancel</button>
 
-                          <button className={"bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm text-sm font-medium mx-6 rounded-lg py-2 px-4"} >
+                          <button type={"submit"} className={"bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm text-sm font-medium mx-6 rounded-lg py-2 px-4"} >
                               Add Todo
                           </button>
 
