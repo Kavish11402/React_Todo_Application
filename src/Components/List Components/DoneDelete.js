@@ -1,4 +1,4 @@
-export default function DoneDelete({todos , todoId , deleteTodo , setTodos})
+export default function DoneDelete({todos , todoId , deleteTodo , setTodos, toggle})
 {
   return(
     <div>
@@ -34,7 +34,7 @@ export default function DoneDelete({todos , todoId , deleteTodo , setTodos})
                             transition ease-in-out
                             hover:bg-red-600
                             hover:text-white"
-                onClick={()=>{deleteTodo(todoId , todos , setTodos)}}>
+                onClick={()=>{deleteTodo(todoId , todos , setTodos , toggle)}}>
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-8 w-8 mx-auto"

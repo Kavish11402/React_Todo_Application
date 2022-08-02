@@ -1,5 +1,6 @@
 import { Dialog } from '@headlessui/react'
 import {useRef} from "react";
+import {toast} from "react-hot-toast";
 
 export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
 {
@@ -12,16 +13,31 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
     {
         e.preventDefault()
         const date = new Date()
-        let newTodo =
-            {
-                "id": null,
-                "title": String(title.current.value),
-                "description": String(description.current.value),
-                "category": String(category.current.value),
-                "done": false,
-                "date": String(date.getDate()+" / "+(date.getMonth()+1)+" / "+date.getFullYear())
-            };
-        addNewTodo(newTodo,todos,setIsOpen)
+        if(title.current.value===""||description.current.value==="")
+        {
+            toast.error("All Fields are Required",{
+                style: {
+                    fontWeight: "bold" ,
+                    fontSize: "larger"  ,
+                    borderRadius: '10px',
+                }
+            })
+        }
+        else
+        {
+            let newTodo =
+                {
+                    "id": null,
+                    "title": String(title.current.value),
+                    "description": String(description.current.value),
+                    "category": String(category.current.value),
+                    "done": false,
+                    "date": String(date.getDate()+" / "+(date.getMonth()+1)+" / "+date.getFullYear())
+                };
+            addNewTodo(newTodo,todos,setIsOpen)
+        }
+
+
     }
 
     const options = ["Work" , "Personal" , "Study" , "Urgent" , "Other"]
@@ -52,12 +68,10 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
 
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Title</p>
-                              <input ref={title} type={"text"} required className="
+                              <input ref={title} type={"text"}  className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
-                                                                border-2
-                                                                border-gray-400
                                                                 focus:border-indigo-500
                                                                 focus:shadow-md" placeholder="Title of TODO" />
 
@@ -66,12 +80,10 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Category</p>
 
-                              <select ref={category} required className="
+                              <select ref={category}  className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
-                                                                border-2
-                                                                border-gray-400
                                                                 focus:border-indigo-500
                                                                 focus:shadow-md" placeholder="Select Category of TODO">
 
@@ -88,12 +100,10 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
 
                           <div className={"my-5"}>
                               <p className={"mb-2 text-md font-bold"}>Description</p>
-                              <input ref={description} type={"text"} required className="
+                              <input ref={description} type={"text"}  className="
                                                                 w-full
                                                                 rounded-xl
                                                                 px-2
-                                                                border-2
-                                                                border-gray-400
                                                                 focus:border-indigo-500
                                                                 focus:shadow-md" placeholder="Description of TODO"/>
                           </div>
