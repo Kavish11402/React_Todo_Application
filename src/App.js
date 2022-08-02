@@ -5,9 +5,9 @@ import { getDocs, collection } from "firebase/firestore";
 import Loading from "./Components/Loading";
 import MyIndex from "./Components/MyIndex";
 
-function setOnLocal(todoList){  localStorage.setItem("todosList",JSON.stringify(todoList)) }
+/*function setOnLocal(todoList){  localStorage.setItem("todosList",JSON.stringify(todoList)) }
 
-function getFromLocal(setTodosList){ setTodosList(JSON.parse(localStorage.getItem("todosList"))) }
+function getFromLocal(setTodosList){ setTodosList(JSON.parse(localStorage.getItem("todosList"))) }*/
 
 
 
