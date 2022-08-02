@@ -1,15 +1,36 @@
-import NavBar from "./Components/Navigation Bar/Nav Bar";
-import Todolist from "./Components/TodoComponent/Todolist";
 import {useEffect, useState} from "react";
-import AddNewTodo from "./Components/TodoComponent/AddNewTodo";
-import {toast, Toaster} from "react-hot-toast";
+import {toast} from "react-hot-toast";
+import {db} from "./Firebase";
+import { getDocs, collection } from "firebase/firestore";
+import Loading from "./Components/Loading";
+import MyIndex from "./Components/MyIndex";
 
-function setOnLocal(todoList){  localStorage.setItem("todosList",JSON.stringify(todoList)) }
+/*function setOnLocal(todoList){  localStorage.setItem("todosList",JSON.stringify(todoList)) }
 
-function getFromLocal(setTodosList){ setTodosList(JSON.parse(localStorage.getItem("todosList"))) }
+function getFromLocal(setTodosList){ setTodosList(JSON.parse(localStorage.getItem("todosList"))) }*/
 
-function deleteTodo(todoId , todos ,setTodos){
 
+function mapTodos(todos, temp , setLoading)
+{
+    temp.map((e)=>
+    {
+        todos.push(e)
+        return null
+    })
+    setLoading(false)
+}
+
+async function getFromFireBase(todos ,setTodos , setLoading)
+{
+    const snapshot = await getDocs(collection(db,"todos"))
+    const temp  = snapshot.docs.map((doc)=>{
+        return doc.data()
+    })
+
+    await mapTodos(todos,temp , setLoading)
+}
+
+function deleteTodo(todoId , todos ,setTodos , toggle){
     if (window.confirm("Are you sure you want to delete ?"))
     {
         let newTodo = todos.filter((todo)=>{
@@ -19,13 +40,11 @@ function deleteTodo(todoId , todos ,setTodos){
         })
 
         setTodos(newTodo)
-        setOnLocal(newTodo)
+        toggle(0)
         toast.success("Todo Deleted")
     }
     else
         toast.error("Deletion Cancelled")
-
-
 }
 
 function addNewTodo(newTodo,todos,setIsOpen)
@@ -36,21 +55,24 @@ function addNewTodo(newTodo,todos,setIsOpen)
         newTodo = {...newTodo , "id":((todos[(todos.length-1)].id)+1)}
 
     todos.push(newTodo)
-    setOnLocal(todos)
     setIsOpen(false)
-    toast.success("Todo Added Successfully")
+    toast.success("Todo Added Successfully",{
+        style: {
+            fontWeight: "bold" ,
+            fontSize: "larger"  ,
+            borderRadius: '10px',
+        }
+    })
 }
 
 
 export default function App() {
 
 
+    //const [show,setShow] = useState(true)
 
     const day =
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 shadow-blue-200"
-            viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 shadow-blue-200" viewBox="0 0 20 20" fill="currentColor">
 
             <path
                 fill-rule="evenodd"
@@ -60,11 +82,7 @@ export default function App() {
         </svg>
 
     const night =
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10"
-            viewBox="0 0 20 20"
-            fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
             <path
                 d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
             />
@@ -74,13 +92,16 @@ export default function App() {
 
 
     const [todos , setTodos] = useState([])
-
+    const [loading ,setLoading] = useState(true)
 
 
 
     useEffect(()=>{
 
-        getFromLocal(setTodos)
+        getFromFireBase( todos ,setTodos , setLoading)
+
+
+        /*getFromLocal(setTodos)*/
 
         /*setOnLocal([
             {
@@ -178,8 +199,8 @@ export default function App() {
     const [Theme,setTheme] =useState("absolute top-0 left-0 right-0")
 
 
-    const toggle = ()=>{
-        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600 h-screen")
+    const toggle = (change=0)=>{
+        if((Theme==="absolute top-0 left-0 right-0 bg-gray-600 h-max"||Theme==="absolute top-0 left-0 right-0 bg-gray-600 h-screen")&&change===1)
         {
             setTheme("absolute top-0 left-0 right-0")
 
@@ -190,42 +211,35 @@ export default function App() {
             setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
         }
         else {
-            setTheme("absolute top-0 left-0 right-0 bg-gray-600 h-screen")
-
+            if (todos.length<=2)
+            {setTheme("absolute top-0 left-0 right-0 bg-gray-600 h-screen")}
+            else
+            {setTheme("absolute top-0 left-0 right-0 bg-gray-600 h-max")}
             setDayNight("flex items-center  rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
             setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
             setBtnText(day)
             setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-2xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-white")
+            if(change===1){
+                toast("Dark Mode Activated", {
+                    style: {
+                        border: "2px solid white",
+                        fontWeight: "bold",
+                        fontSize: "larger",
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                    }
+                })
+            }
         }
     }
 
-
-
-
     return (
         <div className="relative ">
+            {
 
-
-
-            <div className={Theme}>
-                <Toaster/>
-                <NavBar setIsOpen={setIsOpen} />
-
-                <div className={dayNight}>
-                    <button onClick={toggle} className={btnIcon} >
-                        {btnText}
-                    </button>
-                </div>
-
-                <div className="mt-36 ">
-
-                    <Todolist todos={todos} todoTheme={todoTheme} deleteTodo={deleteTodo} setTodos={setTodos} />
-                    <AddNewTodo todos={todos} isOpen={isOpen} setIsOpen={setIsOpen} addNewTodo={addNewTodo}/>
-
-
-                </div>
-
-            </div>
+                loading? <Loading/> : <MyIndex isOpen={isOpen} addNewTodo={addNewTodo} Theme={Theme}  setIsOpen={setIsOpen}  dayNight={dayNight}  toggle={toggle}  btnIcon={btnIcon}  btnText={btnText}  todos={todos}  todoTheme={todoTheme}  deleteTodo={deleteTodo}  setTodos={setTodos}/>
+            }
         </div>
     )
 }
