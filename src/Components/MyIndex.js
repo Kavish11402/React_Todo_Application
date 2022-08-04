@@ -3,7 +3,7 @@ import NavBar from "./Navigation Bar/Nav Bar";
 import Todolist from "./TodoComponent/Todolist";
 import AddNewTodo from "./TodoComponent/AddNewTodo";
 
-export default function MyIndex({ addNewTodo , isOpen , Theme , setIsOpen , dayNight , toggle , btnIcon , btnText , todos , todoTheme , deleteTodo , setTodos})
+export default function MyIndex({ setLoading , addDataToDB , isOpen , Theme , setIsOpen , dayNight , toggle , btnIcon , btnText , todos , todoTheme , deleteDataFromDB , setTodos})
 {
   return(
       <div className={Theme}>
@@ -18,8 +18,8 @@ export default function MyIndex({ addNewTodo , isOpen , Theme , setIsOpen , dayN
 
           <div className="mt-36 ">
 
-              <Todolist todos={todos} todoTheme={todoTheme} deleteTodo={deleteTodo} setTodos={setTodos} toggle={toggle} />
-              <AddNewTodo todos={todos}  setIsOpen={setIsOpen} isOpen={isOpen} addNewTodo={addNewTodo}/>
+              <Todolist todos={todos} todoTheme={todoTheme} deleteDataFromDB={deleteDataFromDB} setTodos={setTodos} toggle={toggle} />
+              <AddNewTodo todos={todos}  setIsOpen={setIsOpen} isOpen={isOpen} addDataToDB={addDataToDB} setTodos={setTodos} setLoading={setLoading} />
 
 
           </div>

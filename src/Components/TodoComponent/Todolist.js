@@ -1,14 +1,13 @@
 import Todo from "../Model/Todo";
-export default function Todolist({todos , todoTheme , deleteTodo , setTodos , toggle})
+export default function Todolist({todos , todoTheme , deleteDataFromDB , setTodos , toggle})
 {
     return(
         <div>
             {
                 todos.map(
                     (todo)=>{
-                        console.log(todo)
                         return(
-                            <Todo todo={todo} todoTheme={todoTheme} deleteTodo={deleteTodo}    todos={todos} setTodos={setTodos}/>
+                            <Todo key={todo.id} todo={todo} todoTheme={todoTheme} deleteDataFromDB={deleteDataFromDB}  todos={todos} setTodos={setTodos}/>
                         );
                     }
                 )

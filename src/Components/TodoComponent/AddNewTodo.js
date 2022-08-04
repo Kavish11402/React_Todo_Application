@@ -1,8 +1,9 @@
 import { Dialog } from '@headlessui/react'
 import {useRef} from "react";
 import {toast} from "react-hot-toast";
+import { serverTimestamp } from "firebase/firestore";
 
-export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
+export default function AddNewTodo({todos , setIsOpen , isOpen , addDataToDB , setTodos , setLoading})
 {
     const title = useRef(null)
     const category = useRef(null)
@@ -12,7 +13,6 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
     function createNewTodo(e)
     {
         e.preventDefault()
-        const date = new Date()
         if(title.current.value===""||description.current.value==="")
         {
             toast.error("All Fields are Required",{
@@ -27,14 +27,13 @@ export default function AddNewTodo({todos,isOpen, setIsOpen , addNewTodo})
         {
             let newTodo =
                 {
-                    "id": null,
                     "title": String(title.current.value),
                     "description": String(description.current.value),
                     "category": String(category.current.value),
                     "done": false,
-                    "date": String(date.getDate()+" / "+(date.getMonth()+1)+" / "+date.getFullYear())
+                    "date": serverTimestamp()
                 };
-            addNewTodo(newTodo,todos,setIsOpen)
+            addDataToDB(newTodo , setIsOpen , setTodos , setLoading)
         }
 
 
