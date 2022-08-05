@@ -1,5 +1,5 @@
 import Todo from "../Model/Todo";
-export default function Todolist({todos , todoTheme , deleteDataFromDB , setTodos , toggle})
+export default function Todolist({ updateDoneToDB ,todos , todoTheme , deleteDataFromDB , setTodos , toggle , setLoading , updateDataToDB , setIsOpen , setIsUpdateOpen , isUpdateOpen})
 {
     return(
         <div>
@@ -7,7 +7,12 @@ export default function Todolist({todos , todoTheme , deleteDataFromDB , setTodo
                 todos.map(
                     (todo)=>{
                         return(
-                            <Todo key={todo.id} todo={todo} todoTheme={todoTheme} deleteDataFromDB={deleteDataFromDB}  todos={todos} setTodos={setTodos}/>
+                            <Todo key={todo.id} updateDoneToDB={updateDoneToDB} todo={todo} todoTheme={todoTheme} deleteDataFromDB={deleteDataFromDB}  todos={todos} setTodos={setTodos} setLoading={setLoading} updateDataToDB={updateDataToDB}
+                                  toggle={toggle}
+                                  setIsOpen={setIsOpen}
+                                  setIsUpdateOpen={setIsUpdateOpen}
+                                  isUpdateOpen={isUpdateOpen}
+                            />
                         );
                     }
                 )

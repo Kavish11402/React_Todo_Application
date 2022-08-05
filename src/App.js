@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {toast} from "react-hot-toast";
 import {db} from "./Firebase";
-import {getDocs, collection, addDoc} from "firebase/firestore";
-import Loading from "./Components/Loading";
+import {updateDoc, doc, deleteDoc, getDocs, collection, addDoc} from "firebase/firestore";
+import Loading from "./Components/HelperComponents/Loading";
 import MyIndex from "./Components/MyIndex";
 
 
@@ -18,6 +18,21 @@ function addDataToDB( newTodo , setIsOpen , setTodos , setLoading )
     )
 }
 
+// Update Operation
+async function updateDataToDB( todo , setTodos , setLoading )
+{
+    console.log(todo)
+    await updateDoc(doc(db , "todos" , todo.id) , todo)
+    getDataFromDB(setTodos , setLoading).then(()=>{toast.success("Todo Updated")})
+}
+
+async function updateDoneToDB( todo , setTodos , setLoading )
+{
+    await updateDoc(doc(db, "todos", todo.id), {...todo , done:true})
+    getDataFromDB(setTodos , setLoading).then(()=>{toast.success("Todo Updated")})
+}
+
+
 // Read Operation
 async function getDataFromDB(setTodos , setLoading)
 {
@@ -29,45 +44,13 @@ async function getDataFromDB(setTodos , setLoading)
     setLoading(false)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Update Operation
-function updateDataToDB()
-{}
-
-
-
-
-
 // Delete Operation
-function deleteDataFromDB(todoId , todos ,setTodos , toggle)
+async function deleteDataFromDB(todoId ,  toggle , setTodos , setLoading)
 {
     if (window.confirm("Are you sure you want to delete ?"))
     {
-        let newTodo = todos.filter((todo)=>{
-            return(
-                todo.id !== todoId
-            )
-        })
-
-        setTodos(newTodo)
-        toggle(0)
-        toast.success("Todo Deleted")
+        await deleteDoc(doc(db , "todos" , todoId)).then()
+        getDataFromDB(setTodos , setLoading).then(()=>{toast.success("Todo Deleted")})
     }
     else
         toast.error("Deletion Cancelled")
@@ -82,7 +65,7 @@ export default function App() {
             <path
                 fill-rule="evenodd"
                 d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
             />
         </svg>
 
@@ -99,6 +82,7 @@ export default function App() {
 
     const [todoTheme,setTodoTheme] = useState("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
     const [isOpen, setIsOpen] = useState(false)
+    const [isUpdateOpen , setIsUpdateOpen] = useState(false)
     const [btnText,setBtnText] =useState(night)
     const [btnIcon,setBtnIcon] = useState("text-stone-700 transition ease-in-out mx-auto")
     const [dayNight,setDayNight] = useState("flex items-center  rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
@@ -117,7 +101,8 @@ export default function App() {
 
     function toggle (change=0)
     {
-        if((Theme==="absolute top-0 left-0 right-0 bg-gray-600 h-max"||Theme==="absolute top-0 left-0 right-0 bg-gray-600 h-screen")&&change===1)
+
+        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600 min-h-screen"&&change===1)
         {
             setTheme("absolute top-0 left-0 right-0")
             setBtnText(night)
@@ -126,11 +111,9 @@ export default function App() {
             setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
             toast(" Bye bye Dark Mode" , { icon: '👏' })
         }
+
         else {
-            if (todos.length<=2)
-            {setTheme("absolute top-0 left-0 right-0 bg-gray-600 h-screen")}
-            else
-            {setTheme("absolute top-0 left-0 right-0 bg-gray-600 h-max")}
+            setTheme("absolute top-0 left-0 right-0 bg-gray-600 min-h-screen")
             setDayNight("flex items-center  rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
             setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
             setBtnText(day)
@@ -158,6 +141,8 @@ export default function App() {
                     <Loading/>
                     :
                     <MyIndex
+                        updateDoneToDB={updateDoneToDB}
+                        updateDataToDB={updateDataToDB}
                         isOpen={isOpen}
                         addDataToDB={addDataToDB}
                         Theme={Theme}
@@ -171,6 +156,8 @@ export default function App() {
                         deleteDataFromDB={deleteDataFromDB}
                         setTodos={setTodos}
                         setLoading={setLoading}
+                        setIsUpdateOpen={setIsUpdateOpen}
+                        isUpdateOpen={isUpdateOpen}
                     />
 
             }

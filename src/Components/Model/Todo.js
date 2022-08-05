@@ -1,36 +1,34 @@
 import Title from "../List Components/Title";
 import Description from "../List Components/Description";
-import DoneDelete from "../List Components/DoneDelete";
+import DoneDeleteUpdate from "../List Components/DoneDeleteUpdate";
 import Category from "../List Components/Category";
 import Done from "../List Components/Done";
-import Date from "../List Components/Date";
+import {useState} from "react";
+import SaveCancel from "../List Components/SaveCancel";
+import EditTodo from "../TodoComponent/EditTodo";
+import NormalTodo from "../TodoComponent/NormalTodo";
 
-export default function Todo({todo , todoTheme , deleteDataFromDB , todos , setTodos , toggle})
+export default function Todo({ updateDoneToDB ,  todo , todoTheme , deleteDataFromDB , todos , setTodos , toggle , setLoading , updateDataToDB ,  setIsOpen , isUpdateOpen , setIsUpdateOpen})
 {
+    const [updateTodo,setUpdateTodo]= useState(false)
     return(
 
-        <div className={todoTheme}>
-
-
-
-            <div>
-                <Title todoTitle={todo.title}/>
-                <Description todoDesc={todo.description}/>
-                <DoneDelete todos={todos} todoId={todo.id} deleteDataFromDB={deleteDataFromDB} setTodos={setTodos} toggle={toggle}/>
-            </div>
-
-
-            <div>
-                <Category todoCategory={todo.category}/>
-                <Done todoStatus={todo.done}/>
-                {/*<Date todoDate={todo.date}/>*/}
-            </div>
-
-
+        <div>
+            {
+                updateTodo? <EditTodo todo={todo} setUpdateTodo={setUpdateTodo}  setTodos={setTodos} setLoading={setLoading}  todoTheme={todoTheme} updateDataToDB={updateDataToDB} /> : <NormalTodo todo={todo}
+                                                                                                     deleteDataFromDB={deleteDataFromDB}
+                                                                                                     updateDoneToDB={updateDoneToDB}
+                                                                                                      updateDataToDB={updateDataToDB}
+                                                                                                      setLoading={setLoading}
+                                                                                                      setTodos={setTodos}
+                                                                                                      toggle={toggle}
+                                                                                                      setIsUpdateOpen={setIsUpdateOpen}
+                                                                                                      isUpdateOpen={isUpdateOpen}
+                                                                                                      setIsOpen={setIsOpen}
+                                                                                                      setUpdateTodo={setUpdateTodo}
+                                                                                                      todoTheme={todoTheme}/>
+            }
         </div>
-
-
-
 
     )
 }

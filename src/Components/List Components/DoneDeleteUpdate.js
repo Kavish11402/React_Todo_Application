@@ -1,5 +1,8 @@
-export default function DoneDelete({todos , todoId , deleteDataFromDB , setTodos, toggle})
+export default function DoneDeleteUpdate({ updateDoneToDB , setUpdateTodo , todoId , deleteDataFromDB , setTodos, toggle , setLoading , todo , setIsOpen , isUpdateOpen , setIsUpdateOpen})
 {
+
+
+
   return(
     <div>
 
@@ -11,7 +14,8 @@ export default function DoneDelete({todos , todoId , deleteDataFromDB , setTodos
                             border-solid border-4 border-green-500
                             transition ease-in-out
                             hover:bg-green-500
-                            hover:text-white">
+                            hover:text-white"
+        onClick={()=>{ updateDoneToDB( todo , setTodos , setLoading ) }}>
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-8 w-8 mx-auto"
@@ -29,12 +33,13 @@ export default function DoneDelete({todos , todoId , deleteDataFromDB , setTodos
         {/*Mark as Delete*/}
         <button className="text-red-600
                             w-16
+                            mr-6
                             rounded-lg
                             border-solid border-4 border-red-600
                             transition ease-in-out
                             hover:bg-red-600
                             hover:text-white"
-                onClick={()=>{deleteDataFromDB(todoId , todos , setTodos , toggle)}}>
+                onClick={()=>{deleteDataFromDB(todoId ,  toggle , setTodos , setLoading)}}>
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-8 w-8 mx-auto"
@@ -49,6 +54,30 @@ export default function DoneDelete({todos , todoId , deleteDataFromDB , setTodos
             </svg>
 
         </button>
+
+        {/*Edit Todo*/}
+        <button className="text-purple-600
+                            w-16
+                            mr-6
+                            rounded-lg
+                            border-solid border-4 border-purple-600
+                            transition ease-in-out
+                            hover:bg-purple-600
+                            hover:text-white"
+                onClick={()=>{ setUpdateTodo(true) }}>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 className="h-8 w-8 mx-auto"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+
+
+        </button>
+
     </div>
   );
 }
