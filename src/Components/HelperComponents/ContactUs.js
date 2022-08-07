@@ -6,7 +6,6 @@ import {toast, Toaster} from "react-hot-toast";
 export default function ContactUs()
 {
 
-
     const form = useRef();
 
     function sendEmail(e)
@@ -25,17 +24,12 @@ export default function ContactUs()
     }
 
 
-
   return(
       <div >
           <Toaster/>
           <NavBar/>
 
-
-
           <div className={"flex justify-center min-h-screen"}>
-
-
 
               <div className={"w-9/12 rounded-3xl bg-zinc-200 mb-10 mt-32"}>
 
@@ -86,16 +80,6 @@ export default function ContactUs()
                                       </svg>
                                       <p>Indira Nagar Sector-8</p>
                                   </div>
-
-
-
-
-
-
-
-
-
-
 
                               </div>
 
@@ -160,7 +144,7 @@ export default function ContactUs()
                                       </button>
 
                                       <button type="submit" className="mr-16 py-2 px-4 w-32 text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                                          Save
+                                          Send
                                       </button>
                                   </div>
                               </div>
