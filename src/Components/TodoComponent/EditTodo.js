@@ -1,10 +1,11 @@
 import SaveCancel from "../List Components/SaveCancel";
 import Done from "../List Components/Done";
 import {useRef} from "react";
+import TodoDate from "../List Components/TodoDate";
 
 
 
-export default function EditTodo({todo, setUpdateTodo , todoTheme , updateDataToDB , setTodos , setLoading} )
+export default function  EditTodo({todo, setUpdateTodo , todoTheme , updateDataToDB , setTodos , setLoading} )
 {
     const title = useRef(todo.title)
     const category = useRef(todo.category)
@@ -39,12 +40,10 @@ export default function EditTodo({todo, setUpdateTodo , todoTheme , updateDataTo
     return(
             <div className={todoTheme} >
 
-                <div>
+                <div className={"flex justify-between flex-col"} >
                     <div className="flex mb-8 font-bold  text-4xl">
-
                       <h2 className="mr-4 underline">Title:</h2>
                       <input ref={title} type={"text"}   placeholder={todo.title} />
-
                     </div>
 
                     <div className="flex mb-10  text-2xl">
@@ -52,13 +51,11 @@ export default function EditTodo({todo, setUpdateTodo , todoTheme , updateDataTo
                       <input ref={description} type="text" placeholder={todo.description} />
                     </div>
 
-                  <SaveCancel setUpdateTodo={setUpdateTodo} todo={todo} change={change}  />
-
+                    <SaveCancel setUpdateTodo={setUpdateTodo} todo={todo} change={change}  />
                 </div>
 
 
-                <div>
-
+                <div className={"flex justify-between flex-col"}>
                     <select ref={category} className="w-full  rounded-xl px-2 focus:border-indigo-500 focus:shadow-md" placeholder="Select Category of TODO">
 
                         {options.map((option)=>{
@@ -71,10 +68,8 @@ export default function EditTodo({todo, setUpdateTodo , todoTheme , updateDataTo
                     </select>
 
                   <Done todoStatus={todo.done}/>
-                  {/*<Date todoDate={todo.date}/>*/}
+                  <TodoDate time={todo.date.seconds}/>
                 </div>
-
-                <button onClick={()=>{change()}} >see</button>
 
             </div>
     );

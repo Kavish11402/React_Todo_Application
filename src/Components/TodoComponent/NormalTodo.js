@@ -3,12 +3,13 @@ import Description from "../List Components/Description";
 import DoneDeleteUpdate from "../List Components/DoneDeleteUpdate";
 import Category from "../List Components/Category";
 import Done from "../List Components/Done";
+import TodoDate from "../List Components/TodoDate";
 
-export default function NormalTodo({ todo , deleteDataFromDB , updateDoneToDB , setLoading , setTodos , toggle , setIsUpdateOpen , isUpdateOpen , setIsOpen , setUpdateTodo , todoTheme })
+export default function NormalTodo({ dynamicCSS , todo , deleteDataFromDB , updateDoneToDB , setLoading , setTodos , toggle , setIsUpdateOpen , isUpdateOpen , setIsOpen , setUpdateTodo , todoTheme })
 {
   return(
-    <div className={todoTheme} >
-        <div>
+    <div className={ todoTheme + dynamicCSS } >
+        <div className={"flex justify-between flex-col"}>
             <Title todoTitle={todo.title}/>
             <Description todoDesc={todo.description}/>
             <DoneDeleteUpdate
@@ -27,10 +28,10 @@ export default function NormalTodo({ todo , deleteDataFromDB , updateDoneToDB , 
         </div>
 
 
-        <div>
+        <div className={"flex justify-between flex-col"}>
             <Category todoCategory={todo.category}/>
             <Done todoStatus={todo.done}/>
-            {/*<Date todoDate={todo.date}/>*/}
+            <TodoDate time={todo.date.seconds}/>
         </div>
     </div>
   );

@@ -5,12 +5,11 @@ import {updateDoc, doc, deleteDoc, getDocs, collection, addDoc} from "firebase/f
 import Loading from "./Components/HelperComponents/Loading";
 import MyIndex from "./Components/MyIndex";
 
-
 //Create Operation
-function addDataToDB( newTodo , setIsOpen , setTodos , setLoading )
+async function addDataToDB( newTodo , setIsOpen , setTodos , setLoading )
 {
-    addDoc( collection(db,"todos") , newTodo ).then() ;
     setIsOpen(false)
+    await addDoc( collection(db,"todos") , newTodo ).then() ;
     getDataFromDB(setTodos , setLoading).then(()=>
         {
             toast.success("Todo Added Successfully",{ style: { fontWeight: "bold" , fontSize: "larger"  , borderRadius: '10px' } })
@@ -29,7 +28,7 @@ async function updateDataToDB( todo , setTodos , setLoading )
 async function updateDoneToDB( todo , setTodos , setLoading )
 {
     await updateDoc(doc(db, "todos", todo.id), {...todo , done:true})
-    getDataFromDB(setTodos , setLoading).then(()=>{toast.success("Todo Updated")})
+    getDataFromDB(setTodos , setLoading).then(()=>{toast("Task Completed",{icon:"🎉"})})
 }
 
 
@@ -43,6 +42,15 @@ async function getDataFromDB(setTodos , setLoading)
     await setTodos(temp)
     setLoading(false)
 }
+
+
+
+
+
+
+
+
+
 
 // Delete Operation
 async function deleteDataFromDB(todoId ,  toggle , setTodos , setLoading)
@@ -99,16 +107,16 @@ export default function App() {
 
 
 
-    function toggle (change=0)
+    function toggle ()
     {
 
-        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600 min-h-screen"&&change===1)
+        if(Theme==="absolute top-0 left-0 right-0 bg-gray-600 min-h-screen")
         {
             setTheme("absolute top-0 left-0 right-0")
             setBtnText(night)
             setBtnIcon("text-stone-700 transition ease-in-out mx-auto")
             setDayNight("flex items-center  rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-slate-500  h-14 w-28")
-            setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-2xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-orange-300")
+            setTodoTheme("max-w-9xl flex justify-between bg-orange-200 shadow-xl mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl ")
             toast(" Bye bye Dark Mode" , { icon: '👏' })
         }
 
@@ -117,18 +125,16 @@ export default function App() {
             setDayNight("flex items-center  rounded-tl-2xl rounded-bl-2xl fixed top-32 right-0 bg-white  h-14 w-28")
             setBtnIcon("text-yellow-400 transition ease-in-out mx-auto")
             setBtnText(day)
-            setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-2xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl border-solid border-4 border-white")
-            if(change===1){
-                toast("Dark Mode Activated", {
-                    icon: '🌙',
-                    style: {
-                        border: "2px solid white",
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                    }
-                })
-            }
+            setTodoTheme("text-white max-w-9xl flex justify-between bg-gray-900 shadow-xl shadow-blue-200 mt-12 mb-20 mx-auto px-28 py-6 rounded-2xl ")
+            toast("Dark Mode Activated", {
+                icon: '🌙',
+                style: {
+                    border: "2px solid white",
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                }
+            })
         }
     }
 

@@ -11,7 +11,7 @@ export default function MyIndex({ updateDoneToDB , setLoading , addDataToDB , is
           <NavBar setIsOpen={setIsOpen} />
 
           <div className={dayNight}>
-              <button onClick={()=>{toggle(1)}} className={btnIcon} >
+              <button onClick={()=>{toggle()}} className={btnIcon} >
                   {btnText}
               </button>
           </div>
