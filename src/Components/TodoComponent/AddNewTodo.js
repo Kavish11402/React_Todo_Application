@@ -51,7 +51,7 @@ export default function AddNewTodo({todos , setIsOpen , isOpen , addDataToDB , s
           <div className="fixed inset-0 flex items-center justify-center p-8">
 
 
-              <div className={"w-1/4 rounded-xl bg-white"}>
+              <div className={"w-1/2 rounded-xl bg-white"}>
 
 
                   <form onSubmit={(e)=>{ createNewTodo(e) }}>

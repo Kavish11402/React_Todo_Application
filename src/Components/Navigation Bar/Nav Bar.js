@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export default function NavBar({setIsOpen})
 {
   return(
@@ -18,8 +20,24 @@ export default function NavBar({setIsOpen})
                 />
             </svg>
             <h1 className={"font-bold text-4xl text-orange-400 px-4 pr-20"} >ToDo-Tasks</h1>
-            <button className={"text-md bg-gray-600 rounded-lg px-3 mr-2 transition ease-in-out hover:bg-gray-500" } >Home</button>
-            <button className={"text-md bg-gray-600 rounded-lg px-3 mx-2 transition ease-in-out hover:bg-gray-500"}>Contact Us</button>
+
+            <Link to={"/"} className={"flex justify-center text-md bg-gray-600 rounded-lg px-3 mr-2 transition ease-in-out hover:bg-gray-500" }>
+                <button  >Home</button>
+            </Link>
+
+
+
+
+
+            <Link to={"/Contact-us"} className={"flex justify-center text-md bg-gray-600 rounded-lg px-3 mx-2 transition ease-in-out hover:bg-gray-500"}>
+                <button>Contact Us</button>
+            </Link>
+
+
+
+
+
+
         </div>
         <div className="flex">
             <button onClick={()=>{setIsOpen(true)}} className={"text-md bg-indigo-700 px-5 py-2 rounded-lg transition ease-in-out hover:bg-indigo-500"} >+&nbsp;&nbsp;Add New Task</button>
