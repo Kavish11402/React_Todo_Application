@@ -9,12 +9,7 @@ export default function TodoDate({time})
         (new Date(time * 1000)).toLocaleString("en-US",{minute: "2-digit"}) + ":"+
         (new Date(time * 1000)).toLocaleString("en-US",{second: "numeric"}) + " "+
         (new Date(time * 1000)).toLocaleString("en-US", {hour: "numeric"}).substring(2,5)
-        
-        
-        
-        
-        
-    console.log( (new Date( time * 1000 )).toLocaleString() )
+
   return(
       <div className="flex text-2xl">
           <h2 className="mr-4 underline font-bold">DateTime:</h2>

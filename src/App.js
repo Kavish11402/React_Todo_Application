@@ -20,7 +20,6 @@ async function addDataToDB( newTodo , setIsOpen , setTodos , setLoading )
 // Update Operation
 async function updateDataToDB( todo , setTodos , setLoading )
 {
-    console.log(todo)
     await updateDoc(doc(db , "todos" , todo.id) , todo)
     getDataFromDB(setTodos , setLoading).then(()=>{toast.success("Todo Updated")})
 }
